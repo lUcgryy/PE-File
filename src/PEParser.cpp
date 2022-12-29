@@ -1,7 +1,7 @@
 #include <Windows.h>
-#include <winternl.h>
+// #include <winternl.h>
 #include <cstdio>
-#include <strsafe.h>
+// #include <strsafe.h>
 
 HANDLE GetFileContent(const char* lpFilePath) {
     const HANDLE hFile = CreateFileA(lpFilePath, GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
@@ -50,10 +50,10 @@ PIMAGE_SECTION_HEADER GetSections(const PIMAGE_SECTION_HEADER pImageSectionHeade
         printf("\n\nSection index: %d of %d", i + 1, numOfSections);
         printf("\n----------------------");
         printf("\n\tSection name: %s", pCurrentSectionHeader->Name);
-        printf("\n\tRaw address: 0x%X", (uintptr_t)pCurrentSectionHeader->PointerToRawData);
-        printf("\n\tRaw size: 0x%X", (uintptr_t)pCurrentSectionHeader->SizeOfRawData);
-        printf("\n\tirtual address: 0x%X", (uintptr_t)pCurrentSectionHeader->VirtualAddress);
-        printf("\n\tVirtual Size: 0x%X", (uintptr_t)pCurrentSectionHeader->Misc.VirtualSize);
+        printf("\n\tRaw address: 0x%X", pCurrentSectionHeader->PointerToRawData);
+        printf("\n\tRaw size: 0x%X", pCurrentSectionHeader->SizeOfRawData);
+        printf("\n\tirtual address: 0x%X", pCurrentSectionHeader->VirtualAddress);
+        printf("\n\tVirtual Size: 0x%X", pCurrentSectionHeader->Misc.VirtualSize);
         printf("\n\tCharacteristics: ");
         if (pCurrentSectionHeader->Characteristics & 0x00000008) {
             printf("The section should not be padded to the next boundary, ");
@@ -181,7 +181,7 @@ void GetImport32(PIMAGE_IMPORT_DESCRIPTOR pImportDescriptor, const DWORD dRawOff
             }
             
             if (pOriginalFirstThunk->u1.Ordinal & IMAGE_ORDINAL_FLAG32) {
-                printf("\t0x%X (Ordinal) : %s\n", (uintptr_t)pOriginalFirstThunk->u1.AddressOfData, dRawOffset + (pImportByName->Name - pImportSection->VirtualAddress));
+                printf("\t0x%X (Ordinal) : %s\n", pOriginalFirstThunk->u1.AddressOfData, dRawOffset + (pImportByName->Name - pImportSection->VirtualAddress));
             }
             else {
                 printf("\t\t%s\n", dRawOffset + (pImportByName->Name - pImportSection->VirtualAddress));
@@ -218,7 +218,7 @@ void GetImport64(PIMAGE_IMPORT_DESCRIPTOR pImportDescriptor, const DWORD dRawOff
             }
 
             if (pOriginalFirstThunk->u1.Ordinal & IMAGE_ORDINAL_FLAG64) {
-                printf("\t0x%X (Ordinal) : %s\n", (uintptr_t)pOriginalFirstThunk->u1.AddressOfData, dRawOffset + (pImportByName->Name - pImportSection->VirtualAddress));
+                printf("\t0x%X (Ordinal) : %s\n", pOriginalFirstThunk->u1.AddressOfData, dRawOffset + (pImportByName->Name - pImportSection->VirtualAddress));
             }
             else {
                 printf("\t\t%s\n", dRawOffset + (pImportByName->Name - pImportSection->VirtualAddress));

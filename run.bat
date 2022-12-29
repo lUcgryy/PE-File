@@ -1,0 +1,1 @@
+g++ .\src\PEParser.cpp -o PEParser.exe

@@ -6,9 +6,11 @@
 
 ## **Language:** C++
 
+## **Requirement:** A C++ Compiler (g++)
+
 ## **Description:**
 
-This program retrive some information of a file. It can parse x86 and x64 file.
+This program retrive some information of a file. It can parse x86 and x64 file. Execute run.bat to get the PEParser.exe
 
 1.  **Optional Header:**
 
