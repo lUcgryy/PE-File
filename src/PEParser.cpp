@@ -1,7 +1,5 @@
 #include <Windows.h>
-// #include <winternl.h>
 #include <cstdio>
-// #include <strsafe.h>
 
 HANDLE GetFileContent(const char* lpFilePath) {
     const HANDLE hFile = CreateFileA(lpFilePath, GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
